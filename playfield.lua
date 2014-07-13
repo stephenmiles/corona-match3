@@ -9,6 +9,7 @@ local scene = composer.newScene()
 local physics = require "physics"
 physics.start()
 physics.setGravity( 0, 20 )
+physics.setDrawMode( "hybrid" )
 local mydata = require( "mydata" )
 
 ---------------------------------------------------------------------------------
@@ -33,7 +34,7 @@ function scene:create( event )
         {    
             x = 75,
             y = 0,
-            width = 75,
+            width = 500,
             height = 75
         }
       }
@@ -41,15 +42,17 @@ function scene:create( event )
 
    local sheet = graphics.newImageSheet( "gems.png", options )
 
+   local gems = {}
+
    for i=75,75*10,75 do
    	for e=75,75*10,75 do
-     local frame1 = display.newImage( sheet, 1, i, e )
-     physics.addBody(frame1, { density=1.0, friction=0, bounce=0 })
-     frame1.isFixedRotation = true
+     gems["gem"..i] = display.newImage( sheet, 1, i, e )
+     physics.addBody(gems["gem"..i], { density=1, friction=1, bounce=0 })
+     gems["gem"..i].isFixedRotation = true
     end
    end
    
-   local frame2 = display.newImage( sheet, 1, 75, 900)
+   local frame2 = display.newImage( sheet, 2, 300, 950)
    physics.addBody(frame2)
    frame2.bodyType = 'static'
 
